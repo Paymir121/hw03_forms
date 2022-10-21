@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}
+  {% if is_edit %}
+    Редактирование записи {{post.text|truncatechars:30 }} от {{post.pub_date|date:"d E Y"}}
+  {% else %}
+    Создаем новый пост
+  {% endif %} 
+{% endblock title %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 p-5">
+      <div class="card">
+        <div class="card-header">
+          {% if is_edit %}
+            Редактировать запись
+          {% else %}
+            Добавить запись
+          {% endif %}                       
+        </div>
+        <div class="card-body">   
+          <form method = "post">
+            {% csrf_token %}
+            {{form.text}}</br>
+            <div class="form-group row my-3 p-3">
+              <label for="id_group">
+                Группа, к которой будет относиться пост                  
+              </label>
+              {{form.group}}
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">
+                {% if is_edit %}
+                  Сохранить
+                {% else %}
+                  Добавить
+                {% endif %}               
+              </button> 
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%} 
