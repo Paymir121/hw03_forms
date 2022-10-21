@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 
+
 class PageAboutAuthor(TemplateView):
     template_name = 'about/author.html'
 

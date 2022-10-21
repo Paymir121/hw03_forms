@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 
 POST_COUNT_IN_THE_SAMPLE: int = 10
 
+
 def index(request):
     posts = Post.objects.select_related('group')
-    paginator = Paginator(posts, POST_COUNT_IN_THE_SAMPLE) 
+    paginator = Paginator(posts, POST_COUNT_IN_THE_SAMPLE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -16,10 +17,11 @@ def index(request):
     }
     return render(request, 'posts/index.html', context)
 
+
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.all()
-    paginator = Paginator(posts, POST_COUNT_IN_THE_SAMPLE) 
+    paginator = Paginator(posts, POST_COUNT_IN_THE_SAMPLE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -27,6 +29,7 @@ def group_posts(request, slug):
         'page_obj': page_obj,
     }
     return render(request, 'posts/group_list.html', context)
+
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
@@ -37,7 +40,7 @@ def profile(request, username):
     paginator = Paginator(posts_list, POST_COUNT_IN_THE_SAMPLE)
     page_obj = paginator.get_page(page_number)
     context = {'author': author,
-               'post_count':  post_count,
+               'post_count': post_count,
                'page_obj': page_obj,
                }
     return render(request, template, context)
@@ -47,11 +50,12 @@ def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     author_post = Post.objects.filter(author=post.author).count()
     template = 'posts/post_detail.html'
-    context = { 'post': post,
-                'author_post' : author_post,
-                'user_can_edit': request.user == post.author,
-    }
-    return render(request, template , context) 
+    context = {'post': post,
+               'author_post': author_post,
+               'user_can_edit': request.user == post.author,
+               }
+    return render(request, template, context)
+
 
 @login_required
 def post_create(request):
@@ -63,12 +67,13 @@ def post_create(request):
             post.author = request.user
             form.author = request.user
             post.save()
-            return redirect("posts:index") 
+            return redirect("posts:index")
     form = PostForm()
     context = {
-        'form' : form,
+        'form': form,
     }
-    return render(request, template , context) 
+    return render(request, template, context)
+
 
 @login_required
 def post_edit(request, post_id):
