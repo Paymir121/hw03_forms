@@ -38,7 +38,6 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = author.posts.select_related("group", "author")
     post_count = posts.count
-    
     template = 'posts/profile.html'
     context = {
         'author': author,
