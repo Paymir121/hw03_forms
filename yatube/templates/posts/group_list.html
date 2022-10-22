@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}Group Page{% endblock title %}
 {% block content %}
- <h1>{{ group.title }}</h1>
-    <p>{{ group.description }}</p>
-    {% for post in page_obj %}
-        <article class="col-3">
-            <ul>
-                <li>
-                Автор: {{ post.author.get_full_name }}
-                </li>
-                <li>
-                Дата публикации: {{ post.pub_date|date:"d E Y" }}
-                </li>
-            </ul>
-        </article>
+  <h1>{{ group.title }}</h1>
+  <p>{{ group.description }}</p>
+  {% for post in page_obj %}
+    <article class="col-3">
+      <ul>
+        <li>
+          Автор: {{ post.author.get_full_name }}
+        </li>
+        <li>
+          Дата публикации: {{ post.pub_date|date:"d E Y" }}
+        </li>
+      </ul>
+    </article>
     <p>{{ post.text |truncatechars:200}}</p>
-    <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a>  
+    <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a>
     {% if not forloop.last %}<hr>{% endif %}
-    {% endfor %}
-    {% include 'includes/paginator.html' %}  
-{% endblock %} 
+  {% endfor %}
+  {% include 'includes/paginator.html' %}
+{% endblock %}

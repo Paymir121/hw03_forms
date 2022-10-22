@@ -6,7 +6,7 @@
       <ul>
         <li>
           Автор: {%if  post.author.get_full_name  %}
-          {{ post.author.get_full_name }}
+            {{ post.author.get_full_name }}
           {%else %}
             Анонимус
           {%endif%}
@@ -15,13 +15,13 @@
           Дата публикации: {{ post.pub_date|date:"d E Y" }}
         </li>
       </ul>
-    <p>{{ post.text |truncatechars:200 }}</p>
-    <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a> </br>
-    {% if post.group %}   
-          <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
-    {% endif %}  
+      <p>{{ post.text |truncatechars:200 }}</p>
+      <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a> </br>
+      {% if post.group %}
+        <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
+      {% endif %}
     </article>
     {% if not forloop.last %}<hr>{% endif %}
   {% endfor %}
-{% include 'includes/paginator.html' %}  
-{% endblock %} 
+  {% include 'includes/paginator.html' %}
+{% endblock %}

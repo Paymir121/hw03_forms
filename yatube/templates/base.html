@@ -1,7 +1,7 @@
-{% load static %}  
-<html lang="ru"> 
-  <head>  
-    <meta charset="utf-8"> 
+{% load static %}
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="img/fav/fav.ico" type="image">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/fav/apple-touch-icon.png' %}">
@@ -15,13 +15,13 @@
   <body>
     {% include 'includes/header.html' %}
     <main>
-      <div class="container py-5">       
+      <div class="container py-5">
         {% block content %}
-        Контент не подвезли :(
+          Контент не подвезли :(
         {% endblock %}
       </div>
 
     </main>
-      {% include 'includes/footer.html' %}    
+    {% include 'includes/footer.html' %}
   </body>
 </html>

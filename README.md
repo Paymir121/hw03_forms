@@ -14,10 +14,10 @@ Django 2.2.19
 - Установите зависимости из файла requirements.txt
 ```
 pip install -r requirements.txt
-``` 
+```
 - В папке с файлом manage.py выполните команду:
 ```
-source venv/Scripts/activate 
+source venv/Scripts/activate
 cd yatube
 python manage.py runserver
 http://127.0.0.1:8000/
