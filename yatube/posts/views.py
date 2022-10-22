@@ -36,8 +36,9 @@ def group_posts(request, slug):
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    post_count = Post.objects.select_related('group', "author").count
-    posts = Post.objects.select_related('group', "author")
+    posts = author.posts.select_related("group", "author")
+    post_count = posts.count
+    
     template = 'posts/profile.html'
     context = {
         'author': author,
