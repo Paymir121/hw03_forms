@@ -10,8 +10,7 @@ from .models import Group, Post, User
 def page(request, posts):
     paginator = Paginator(posts, settings.PAGINATION_SIZE)
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return page_obj
+    return paginator.get_page(page_number)
 
 
 def index(request):
@@ -49,12 +48,11 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    author_post = Post.objects.filter(author=post.author).count()
+    author_post = post.author.posts.count()
     template = 'posts/post_detail.html'
     context = {
         'post': post,
         'author_post': author_post,
-        'user_can_edit': request.user == post.author,
     }
     return render(request, template, context)
 
@@ -62,14 +60,13 @@ def post_detail(request, post_id):
 @login_required
 def post_create(request):
     template = 'posts/post_create.html'
+    form = PostForm(request.POST or None)
     if request.method == 'POST':
-        form = PostForm(request.POST or None)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
             return redirect("posts:profile", request.user)
-    form = PostForm()
     context = {
         'form': form,
     }
@@ -79,7 +76,7 @@ def post_create(request):
 @login_required
 def post_edit(request, post_id):
     template = 'posts/post_create.html'
-    post = Post.objects.get(pk=post_id)
+    post = get_object_or_404(Post, pk=post_id)
     if request.user != post.author:
         return redirect("posts:post_detail", post.pk)
     form = PostForm(request.POST or None, instance=post)

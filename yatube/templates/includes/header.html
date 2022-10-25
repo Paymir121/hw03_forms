@@ -1,11 +1,13 @@
 {% load static %}
 <header>
-    <nav class="navbar navbar-light" >
+  <nav class="navbar navbar-dark navbar-white">
       <div class="container">
+        
         <a class="navbar-brand" href="{% url 'posts:index' %}">
           <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-          <span style="color:red">Ya</span>Toop
+          <span style="color:red">Ya</span>Toop</br>Пользователь: {{ user.username }}
         </a>
+        
         {% with request.resolver_match.view_name as view_name %}
         <ul class="nav nav-pills">
             <li class="nav-item">
@@ -15,7 +17,7 @@
                   Об авторе
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav nav-pills">
                 <a class="nav-link {% if view_name  == 'about:tech' %}active{% endif %}"
                 href="{% url 'about:tech' %}"
                 >
@@ -24,13 +26,13 @@
             </li>
         {% if request.user.is_authenticated %}
 
-          <li class="nav-item">
+          <li class="nav nav-item">
                 <a class="nav-link {% if view_name  == 'users:password_change' %}active{% endif %}"
                 href="{% url 'users:password_change'%}"
                 >
                 Изменить пароль</a>
           </li>
-          <li class="nav-item">
+          <li class="nav nav-pills">
               <a class="nav-link {% if view_name  == 'posts:post_create' %}active{% endif %}"
               href="{% url 'posts:post_create'%}"
               >
@@ -41,9 +43,6 @@
                 href="{% url 'users:logout'%}"
                 >
                 Выйти</a>
-          </li>
-          <li>
-                Пользователь: {{ user.username }}
           </li>
           {% else %}
           <li class="nav-item">

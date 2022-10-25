@@ -29,7 +29,7 @@
       </p>
     </article>
     <article class="col-12 col-md-9">
-      {% if user_can_edit %}
+      {% if request.user == post.author %}
         <a class="btn btn-primary" href="{% url 'posts:post_edit' post.pk %}">редактировать запись</a>
       {% endif %}
     </article>

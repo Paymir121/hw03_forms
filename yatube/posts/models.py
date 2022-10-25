@@ -8,6 +8,12 @@ class Group(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
+    
+    def verbose_name(self):
+        return self.slug
+
+    def help_text(self):
+        return self.description
 
     def __str__(self) -> str:
         return self.title
@@ -31,4 +37,4 @@ class Post(models.Model):
         ordering = ['-pub_date']
 
     def __str__(self):
-        return f"{self.text[:30]}"
+        return f"{self.text[:15]}"
