@@ -56,13 +56,28 @@ class PostFormTest(TestCase):
     def test_edit_post_create_form(self):
         """Posts.Forms. Можно редатикровать посты."""
         response = self.authorized_client.get(
-                reverse('posts:post_edit', args= {"post_id" : self.post.id})
+            reverse(
+                'posts:post_edit',
+                kwargs={"post_id": self.post.id})
         )
         form_data = {
-            'text': 'Тестовый пост',
+            'text': 'Тестовый пост от редактированный',
             'author': self.user
         }
-        for value, expected in form_data.items():
-            with self.subTest(value=value):
-                form_field = response.context['form'].fields[value]
-                self.assertIsInstance(form_field, expected)
+
+        response = self.authorized_client.post(reverse(
+            'posts:post_edit',
+            kwargs={"post_id": self.post.id}),
+            data=form_data,
+            follow=True)
+        self.assertRedirects(
+            response,
+            reverse(
+                'posts:post_detail',
+                kwargs={"post_id": self.post.id}))
+        self.assertTrue(
+            Post.objects.filter(
+                text='Тестовый пост от редактированный',
+                author=self.user
+            ).exists()
+        ) 
